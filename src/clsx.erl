@@ -4,13 +4,9 @@
 
 -include_lib("../include/term2html.hrl").
 
-run(Maps) when is_map(Maps) ->
-    run(maps:to_list(Maps));
-run([_ | _] = Proplists) ->
+run(Proplists) ->
     Classes = lists:uniq(?REV(lists:map(fun to_str/1, run(Proplists, [])))),
-    string:join(Classes, " ");
-run(_) ->
-    [].
+    string:join(Classes, " ").
 
 to_str(Atom) when is_atom(Atom) -> atom_to_list(Atom);
 to_str(List) when is_list(List) -> List.

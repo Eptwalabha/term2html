@@ -19,37 +19,37 @@ expand(Item, Acc) when is_list(Item) ->
     case is_string(Item) of
         true -> [Item | Acc];
         _ -> ?REV([[expand(I, []) || I <- Item] | Acc])
-    end.
+    end;
+expand(Other, Acc)
+  when is_integer(Other); is_float(Other); is_atom(Other) ->
+    ?REV([to_str(Other) | Acc]).
 
 expand_item({Tag}) ->
     expand_item({Tag, []});
 expand_item({Tag, Attributes}) ->
     case is_void_element(Tag) of
-        true ->
-            Tag_str = to_str(Tag),
-            case item_attributes(Attributes) of
-                [] -> ["<", Tag_str, ">"];
-                Attr -> ["<", Tag_str, " ", Attr, ">"]
-            end;
-        _ ->
-            expand_item({Tag, Attributes, ""})
+        true -> opening_tag(Tag, Attributes);
+        _ -> expand_item({Tag, Attributes, ""})
     end;
 expand_item({Tag, Attributes, Content}) ->
     InnerHTML = expand(Content, []),
-    Tag_str = to_str(Tag),
+    [opening_tag(Tag, Attributes), InnerHTML, "</", to_str(Tag), ">"].
+
+opening_tag(Tag, Attributes) ->
+    TagStr = to_str(Tag),
     case item_attributes(Attributes) of
-        [] -> ["<", Tag_str, ">", InnerHTML, "</", Tag_str, ">"];
-        Attr -> ["<", Tag_str, " ", Attr, ">", InnerHTML, "</", Tag_str, ">"]
+        [] -> ["<", TagStr, ">"];
+        Attr -> ["<", TagStr, " ", Attr, ">"]
     end.
 
 item_attributes(Attributes) ->
     lists:join(" ", lists:map(fun attr/1, Attributes)).
 
 attr({Key, List}) when is_list(List) ->
-    Key_str = to_str(Key),
+    KeyStr = to_str(Key),
     case is_string(List) of
-        true -> [Key_str, "=\"", escape(List), "\""];
-        _ -> [Key_str, "=\"", clsx:run(List), "\""]
+        true -> [KeyStr, "=\"", escape(List), "\""];
+        _ -> [KeyStr, "=\"", clsx:run(List), "\""]
     end;
 attr({Key, Value}) ->
     [to_str(Key), "=\"", to_str(Value), "\""];

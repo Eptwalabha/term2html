@@ -10,6 +10,8 @@ clsx_test_() ->
                {[{a, false}, a], "a"}]},
              {"tokens are uniq with preserved order",
               [{["b", a, c, a, {b, true}], "b a c"}]},
+             {"trim and discard empty token",
+              [{["", " a   ", "     "], "a"}]},
              {"deep lists",
               [{[a, [b, [a, c], [[d], e]], [f]], "a b c d e f"}]},
              {"function predicates",

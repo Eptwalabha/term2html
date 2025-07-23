@@ -43,6 +43,21 @@ tag_escape_attribute_test() ->
                  "click-me"
                  "</button>", term2html:expand(Term)).
 
+html_list_test() ->
+    Term = {ul, [],
+            [{li, [], I} || I <- lists:seq(1, 3)]},
+    ?assertEqual("<ul>"
+                 "<li>1</li>"
+                 "<li>2</li>"
+                 "<li>3</li>"
+                 "</ul>",
+                 term2html:expand(Term)).
+
+html_deep_list_test() ->
+    Term = {'div', [], [[{p}], {span}]},
+    ?assertEqual("<div><p></p><span></span></div>",
+                 term2html:expand(Term)).
+
 clsx_attribute_test() ->
     Term = {'div', [{class, [a, {b, true}, {c, false}, "d"]}],
             <<"test clsx">>},
