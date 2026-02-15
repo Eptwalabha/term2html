@@ -1,6 +1,7 @@
 {application, term2html,
- [{description, "make html from erlang tuple"},
-  {vsn, "0.1.0"},
+ [{description, "generate html from erlang tuple (ehtml)"},
+  {vsn, "1.0.0"},
+  {pkg_name, "term2html"},
   {registered, []},
   {applications,
    [kernel,
@@ -8,7 +9,6 @@
    ]},
   {env,[]},
   {modules, []},
-
-  {licenses, ["Apache 2.0"]},
-  {links, []}
+  {licenses, ["MIT"]},
+  {links, [{"GitHub", "https://github.com/Eptwalabha/term2html"}]}
  ]}.
