@@ -6,7 +6,7 @@ generate html from an erlang term (ehtml for those familiar with yaws):
 
 Add `term2html` to the dependencies in your `rebar.config`:
 ```bash
-{deps, [{term2html, "1.0.0"}]}.
+{deps, [{term2html, "1.0.1"}]}.
 ```
 then fetch and compile the dependencies of your project:
 ```bash

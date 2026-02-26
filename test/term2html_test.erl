@@ -58,8 +58,13 @@ html_deep_list_test() ->
     ?assertEqual("<div><p></p><span></span></div>",
                  term2html:expand(Term)).
 
-clsx_attribute_test() ->
-    Term = {'div', [{class, [a, {b, true}, {c, false}, "d"]}],
-            <<"test clsx">>},
-    ?assertEqual("<div class=\"a b d\">test clsx</div>",
+clsx_with_class_attribute_test() ->
+    Term = {'div', [{class, [a, {b, true}, {c, false}, "d", <<"töp"/utf8>>]}],
+            <<"tëst clsx"/utf8>>},
+    ?assertEqual("<div class=\"a b d töp\">tëst clsx</div>",
+                 term2html:expand(Term)).
+
+no_clsx_with_other_attribute_test() ->
+    Term = {img, [{src, [<<"ä"/utf8>>, "bé", c]}], <<"cöntent"/utf8>>},
+    ?assertEqual("<img src=\"äbéc\">cöntent</img>",
                  term2html:expand(Term)).

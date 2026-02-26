@@ -11,7 +11,10 @@ clsx_test_() ->
              {"tokens are uniq with preserved order",
               [{["b", a, c, a, {b, true}], "b a c"}]},
              {"trim and discard empty token",
-              [{["", " a   ", "     "], "a"}]},
+              [{["", " a   ", "     "], "a"},
+               {[<<"">>, <<" a   ">>, "   ", "", <<>>], "a"},
+               {[{" ", true}, {<<" ">>, true}], ""}
+              ]},
              {"deep lists",
               [{[a, [b, [a, c], [[d], e]], [f]], "a b c d e f"}]},
              {"function predicates",
@@ -23,6 +26,8 @@ clsx_test_() ->
               [{[{true, "a", "b"}], "a"},
                {[{false, "a", "b"}], "b"},
                {[{other, "a", "b"}], ""}]},
+             {"binary",
+              [{[{<<"bïnary"/utf8>>, true}, <<"trüe"/utf8>>], "bïnary trüe"}]},
              {"other structures are ignored",
               [{[{ignored}], ""}]}
             ],
