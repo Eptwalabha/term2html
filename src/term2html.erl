@@ -49,7 +49,8 @@ attr({Key, List}) when is_list(List) ->
     KeyStr = to_str(Key),
     case is_string(List) of
         true -> [KeyStr, "=\"", escape(List), "\""];
-        _ -> [KeyStr, "=\"", clsx:run(List), "\""]
+        _ when Key =:= class -> [KeyStr, "=\"", clsx:run(List), "\""];
+        _ -> [KeyStr, "=\"", lists:map(fun to_str/1, List), "\""]
     end;
 attr({Key, Value}) ->
     [to_str(Key), "=\"", to_str(Value), "\""];
@@ -59,7 +60,8 @@ attr(Other) ->
 to_str(Atom) when is_atom(Atom) -> atom_to_list(Atom);
 to_str(Binary) when is_binary(Binary) -> Binary;
 to_str(Integer) when is_integer(Integer) -> integer_to_list(Integer);
-to_str(Float) when is_float(Float) -> io_lib:fwrite("~w", [Float]);
+to_str(Float) when is_float(Float) ->
+    float_to_list(Float, [compact, {decimals, 15}]);
 to_str(String) when is_list(String) -> String.
 
 escape(String) ->

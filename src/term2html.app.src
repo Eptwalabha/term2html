@@ -1,6 +1,6 @@
 {application, term2html,
  [{description, "generate html from erlang tuple (ehtml)"},
-  {vsn, "1.0.0"},
+  {vsn, "1.0.1"},
   {pkg_name, "term2html"},
   {registered, []},
   {applications,
