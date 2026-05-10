@@ -61,7 +61,7 @@ to_str(Atom) when is_atom(Atom) -> atom_to_list(Atom);
 to_str(Binary) when is_binary(Binary) -> Binary;
 to_str(Integer) when is_integer(Integer) -> integer_to_list(Integer);
 to_str(Float) when is_float(Float) ->
-    float_to_list(Float, [compact, {decimals, 15}]);
+    float_to_list(Float, [compact, {decimals, 14}]);
 to_str(String) when is_list(String) -> String.
 
 escape(String) ->
