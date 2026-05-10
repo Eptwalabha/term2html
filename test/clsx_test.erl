@@ -32,5 +32,5 @@ clsx_test_() ->
               [{[{ignored}], ""}]}
             ],
     [{Comment, ?_assertEqual(Expected, clsx:run(Input))}
-     || {Comment, Sub_suite} <- Suite,
-        {Input, Expected} <- Sub_suite].
+     || {Comment, SubSuite} <- Suite,
+        {Input, Expected} <- SubSuite].
