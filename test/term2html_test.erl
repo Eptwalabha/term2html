@@ -12,7 +12,8 @@ tag_only_test() ->
 
 tag_with_attributes_test() ->
     Term = {toto, [{key, value}, attribute]},
-    ?assertEqual("<toto key=\"value\" attribute></toto>", term2html:expand(Term)).
+    ?assertEqual("<toto key=\"value\" attribute></toto>",
+                 term2html:expand(Term)).
 
 void_tag_with_attributes_test() ->
     Term = {img, [{src, <<"https://img.com/penguin.png">>},
@@ -31,7 +32,8 @@ tag_with_attributes_and_children_test() ->
                  "<tata></tata>"
                  "<tutu a=\"b\" selected checked></tutu>"
                  "<br>"
-                 "<titi c=\"d\" test=\"1\" tutu=\"3.141592653589793\">super</titi>"
+                 "<titi c=\"d\" test=\"1\" "
+                 "tutu=\"3.14159265358979\">super</titi>"
                  "</toto>",
                  term2html:expand(Term)).
 
@@ -39,7 +41,8 @@ tag_escape_attribute_test() ->
     Term = {button,
             [{onclick, "alert(\"hello <USER_NAME> & tata\");"}],
             "click-me"},
-    ?assertEqual("<button onclick=\"alert(&quot;hello &lt;USER_NAME&gt; &amp; tata&quot;);\">"
+    ?assertEqual("<button onclick=\"alert(&quot;hello &lt;"
+                 "USER_NAME&gt; &amp; tata&quot;);\">"
                  "click-me"
                  "</button>", term2html:expand(Term)).
 
@@ -67,4 +70,9 @@ clsx_with_class_attribute_test() ->
 no_clsx_with_other_attribute_test() ->
     Term = {img, [{src, [<<"ä"/utf8>>, "bé", c]}], <<"cöntent"/utf8>>},
     ?assertEqual("<img src=\"äbéc\">cöntent</img>",
+                 term2html:expand(Term)).
+
+float_test() ->
+    Term = {span, [], 14.7},
+    ?assertEqual("<span>14.7</span>",
                  term2html:expand(Term)).
