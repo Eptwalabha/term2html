@@ -24,7 +24,7 @@ void_tag_with_attributes_test() ->
 
 all_void_tags_should_quietly_discard_content_test_() ->
     Test = fun (Tag) ->
-                   Term = {Tag, [{class, ~"test"}], ~"content"},
+                   Term = {Tag, [{class, <<"test">>}], <<"content">>},
                    ExpectedHtml = lists:concat(["<", Tag, " class=\"test\">"]),
                    ?_assertEqual(ExpectedHtml, term2html:expand(Term))
            end,
