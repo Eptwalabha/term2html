@@ -22,6 +22,14 @@ void_tag_with_attributes_test() ->
                  "alt=\"superbe image of a penguin\">",
                  term2html:expand(Term)).
 
+all_void_tags_should_quietly_discard_content_test_() ->
+    Test = fun (Tag) ->
+                   Term = {Tag, [{class, <<"test">>}], <<"content">>},
+                   ExpectedHtml = lists:concat(["<", Tag, " class=\"test\">"]),
+                   ?_assertEqual(ExpectedHtml, term2html:expand(Term))
+           end,
+    [Test(Tag) || Tag <- term2html:void_elements()].
+
 tag_with_attributes_and_children_test() ->
     Term = {toto, [{key, value}, attribute],
             [{tata},
@@ -68,8 +76,8 @@ clsx_with_class_attribute_test() ->
                  term2html:expand(Term)).
 
 no_clsx_with_other_attribute_test() ->
-    Term = {img, [{src, [<<"ä"/utf8>>, "bé", c]}], <<"cöntent"/utf8>>},
-    ?assertEqual("<img src=\"äbéc\">cöntent</img>",
+    Term = {form, [{action, [<<"ä"/utf8>>, "bé", c]}], <<"cöntent"/utf8>>},
+    ?assertEqual("<form action=\"äbéc\">cöntent</form>",
                  term2html:expand(Term)).
 
 float_test() ->

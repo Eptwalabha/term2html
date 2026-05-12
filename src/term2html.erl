@@ -32,8 +32,12 @@ expand_item({Tag, Attributes}) ->
         _ -> expand_item({Tag, Attributes, ""})
     end;
 expand_item({Tag, Attributes, Content}) ->
-    InnerHTML = expand(Content, []),
-    [opening_tag(Tag, Attributes), InnerHTML, "</", to_str(Tag), ">"].
+    case is_void_element(Tag) of
+        true -> expand_item({Tag, Attributes});
+        _ ->
+            InnerHTML = expand(Content, []),
+            [opening_tag(Tag, Attributes), InnerHTML, "</", to_str(Tag), ">"]
+    end.
 
 opening_tag(Tag, Attributes) ->
     TagStr = to_str(Tag),
@@ -43,7 +47,7 @@ opening_tag(Tag, Attributes) ->
     end.
 
 item_attributes(Attributes) ->
-    lists:join(" ", lists:map(fun attr/1, Attributes)).
+    lists:join(" ", [attr(Attribute) || Attribute <- Attributes]).
 
 attr({Key, List}) when is_list(List) ->
     KeyStr = to_str(Key),
