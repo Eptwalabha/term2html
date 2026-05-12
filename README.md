@@ -2,7 +2,7 @@
 
 Generate HTML from Ehtml terms (a simple format used by [Yaws](https://yaws.hyber.org/)).
 
-[![GitHub Actions](https://github.com/Eptwalabha/term2html/workflows/CI/badge.svg)](https://github.com/Eptwalabha/term2html/actions)
+[![Erlang CI](https://github.com/Eptwalabha/term2html/actions/workflows/erlang.yml/badge.svg)](https://github.com/Eptwalabha/term2html/actions/workflows/erlang.yml)
 [![Hex.pm Version](https://img.shields.io/hexpm/v/term2html.svg)](https://hex.pm/packages/term2html)
 [![License](https://img.shields.io/hexpm/l/term2html.svg)](https://github.com/Eptwalabha/term2html/blob/main/LICENSE.md)
 [![OTP Version](https://img.shields.io/badge/OTP-26%2B-brightgreen)](https://www.erlang.org/downloads)
